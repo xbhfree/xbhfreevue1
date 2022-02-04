@@ -1,32 +1,47 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
-    </head>
-    <body>
-        <div id="app">
-            {{message}}
-        </div>
 
-        <div id="app-2">
-            <span v-bind:title="message">
-              鼠标悬停几秒钟查看此处动态绑定的提示信息！
-            </span>
-          </div>
-    </body>
-    <script type="text/javascript">
-        var app = new Vue({
-            el : '#app',
-            data : {
-                message : 'hello vue123'
-            }
-        })
-        
-        var app2 = new Vue({
-            el : '#app2',
-            data : {
-                message : 'hide note'
-            }
-        })
-    </script>
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        {{message}}
+    </div>
+
+    <div id="app2">
+        <span v-bind:title="message">
+            鼠标悬停几秒钟查看此处动态绑定的提示信息！
+        </span>
+    </div>
+    <div id="app3">
+        <span v-if="seen">
+            now you can see me
+        </span>
+    </div>
+</body>
+<script type="text/javascript">
+    var app = new Vue({
+        el: '#app',
+        data: {
+            message: 'hello vue123'
+        }
+    })
+
+    var app2 = new Vue({
+        el: '#app2',
+        data: {
+            message: 'hide note'
+        }
+    })
+
+    var app3 = new Vue({
+        el : '#app3',
+        data : {
+            seen : false
+        }
+    })
+</script>
+
 </html>
