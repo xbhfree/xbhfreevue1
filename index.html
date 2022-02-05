@@ -39,6 +39,16 @@
         <p>{{message}}</p>
         <input v-model="message">
     </div>
+
+    <div id="app7">
+        <ol>
+            <todo-item 
+                v-for = "item in groceryList"
+                v-bind:todo = "item"
+                v-bind:key = "item.id"
+            ></todo-item>
+        </ol>
+    </div>
 </body>
 <script type="text/javascript">
     var app = new Vue({
@@ -91,6 +101,22 @@
             message : 'hello vue'
         }
     })
+
+    Vue.component('todo-item', {
+        props : ['todo'],
+        template : '<li>{{todo.text}}</li>'
+    })
+    var app7 = new Vue({
+        el : '#app7',
+        data : {
+            groceryList : [
+                {id : 0, text : '蔬菜'},
+                {id : 1, text : '雪糕'},
+                {id : 2, text : '糖果'}
+            ]
+        }
+    })
+    
 </script>
 
 </html>
