@@ -19,6 +19,7 @@
         <hr/>
         <!-- 3.attribute,v-bind:属性赋值 -->
         <div v-bind:class="color">v-bind</div>
+        <button v-bind:disabled="isButtonDisabled">Button</button>
     </div>
 
     <script>
@@ -28,7 +29,8 @@
         data : {
                 msg : 'hello vue!',
                 htmlMsg : '<span style="color:red">this is red</span>',
-                color : 'yellow'
+                color : 'yellow',
+                isButtonDisabled : false
         },
         methods: {}
      });
