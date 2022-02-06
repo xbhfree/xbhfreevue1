@@ -12,6 +12,11 @@
     <div id ="app" v-once>
         <!-- 1.文本 -->
         {{msg}}
+        <hr/>
+        <!-- 2.原始html,利用v-html渲染原始html -->
+        <p>Using Mustache {{htmlMsg}}</p>
+        <p>Using v-html directive<span v-html="htmlMsg"></span></p>
+        <hr/>
     </div>
 
     <script>
@@ -19,7 +24,8 @@
      var vm = new Vue({
         el: '#app',
         data : {
-                msg : 'hello vue!'
+                msg : 'hello vue!',
+                htmlMsg : '<span style="color:red">this is red</span>'
         },
         methods: {}
      });
