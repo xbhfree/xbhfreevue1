@@ -17,6 +17,8 @@
         <p>Using Mustache {{htmlMsg}}</p>
         <p>Using v-html directive<span v-html="htmlMsg"></span></p>
         <hr/>
+        <!-- 3.attribute,v-bind:属性赋值 -->
+        <div v-bind:class="color">v-bind</div>
     </div>
 
     <script>
@@ -25,13 +27,17 @@
         el: '#app',
         data : {
                 msg : 'hello vue!',
-                htmlMsg : '<span style="color:red">this is red</span>'
+                htmlMsg : '<span style="color:red">this is red</span>',
+                color : 'yellow'
         },
         methods: {}
      });
      //1.v-once保证只渲染一次
      //vm.msg = "222"
     </script>
+    <style type="text/css">
+        .yellow{color:yellow;}
+    </style>
 </body>
 
 </html>
