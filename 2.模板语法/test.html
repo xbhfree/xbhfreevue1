@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id ="app" v-once>
+        <!-- 1.文本 -->
+        {{msg}}
+    </div>
+
+    <script>
+     //创建Vue实例,得到 ViewModel
+     var vm = new Vue({
+        el: '#app',
+        data : {
+                msg : 'hello vue!'
+        },
+        methods: {}
+     });
+     //1.v-once保证只渲染一次
+     //vm.msg = "222"
+    </script>
+</body>
+
+</html>
