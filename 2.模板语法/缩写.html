@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <!-- v-bind缩写: -->
+        <!-- 完整语法 -->
+        <a v-bind:href="url">...</a>
+        <!-- 缩写 -->
+        <a :href="url">...</a>
+        <!-- 动态参数的缩写 (2.6.0+) -->
+        <a :[key]="url"> ... </a>
+
+        <!-- v-on缩写@ -->
+        <!-- 完整语法 -->
+        <a v-on:click="doSomething">...</a>
+        <!-- 缩写 -->
+        <a @click="doSomething">...</a>
+        <!-- 动态参数的缩写 (2.6.0+) -->
+        <a @[event]="doSomething"> ... </a>
+    </div>
+
+    <script>
+        //创建Vue实例,得到 ViewModel
+        var vm = new Vue({
+            el: '#app',
+            data: {},
+            methods: {}
+        });
+    </script>
+</body>
+
+</html>
+<!-- 
+Vue 为 v-bind 和 v-on 这两个最常用的指令
+
+ -->
