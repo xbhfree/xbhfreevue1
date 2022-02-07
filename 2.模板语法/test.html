@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,34 +10,48 @@
 </head>
 
 <body>
-    <div id ="app" v-once>
+    <div id="app">
         <!-- 1.文本 -->
         {{msg}}
-        <hr/>
+        <hr />
         <!-- 2.原始html,利用v-html渲染原始html -->
         <p>Using Mustache {{htmlMsg}}</p>
         <p>Using v-html directive<span v-html="htmlMsg"></span></p>
-        <hr/>
+        <hr />
         <!-- 3.attribute,v-bind:属性赋值 -->
         <div v-bind:class="color">v-bind</div>
+        <hr />
+        <!-- 4.使用javascript表达式 -->
+        {{number}}
+        {{ok ? "yes" : "no"}}
+        <div v-bind:id="'list-' + id">233</div>
+        <!-- 每个绑定都只能包含单个表达式 -->
+        <!-- 这是语句，不是表达式 -->
+        <!-- {{ var a = 1 }} -->
+        <!-- 流控制也不会生效，请使用三元表达式 -->
+        <!-- {{ if (ok) { return message } }} -->
     </div>
-
     <script>
-     //创建Vue实例,得到 ViewModel
-     var vm = new Vue({
-        el: '#app',
-        data : {
-                msg : 'hello vue!',
-                htmlMsg : '<span style="color:red">this is red</span>',
-                color : 'yellow'
-        },
-        methods: {}
-     });
+        //创建Vue实例,得到 ViewModel
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                msg: 'hello vue!',
+                htmlMsg: '<span style="color:red">this is red</span>',
+                color: 'yellow',
+                number: 1,
+                ok: true,
+                id: 0
+            },
+            methods: {}
+        });
      //1.v-once保证只渲染一次
      //vm.msg = "222"
     </script>
     <style type="text/css">
-        .yellow{color:yellow;}
+        .yellow {
+            color: yellow;
+        }
     </style>
 </body>
 
