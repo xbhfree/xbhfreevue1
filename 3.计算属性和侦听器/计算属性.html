@@ -10,8 +10,15 @@
 
 <body>
     <div id ="app"> 
+        <!-- 基础示例 -->
         <p>Original Message:{{message}}</p>
         <p>Computed Message:{{reversedMessage}}</p>
+        <!-- 
+            计算属性vs方法
+            计算属性是基于它们的响应式依赖进行缓存的
+            希望用缓存用计算属性（如需要大量运算损耗性能的数据，方法总会重新计算）
+        -->
+        <p>Method Message:{{reversedMessage()}}</p>
     </div>
 
     <script>
@@ -26,7 +33,11 @@
                return this.message.split('').reverse().join('')
             }
         },
-        methods: {}
+        methods: {
+            reversedMessage : function(){
+               return this.message.split('').reverse().join('')
+            }
+        }
      });
     </script>
 </body>
