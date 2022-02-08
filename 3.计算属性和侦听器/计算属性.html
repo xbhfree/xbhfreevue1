@@ -19,6 +19,7 @@
             希望用缓存用计算属性（如需要大量运算损耗性能的数据，方法总会重新计算）
         -->
         <p>Method Message:{{reversedMessage()}}</p>
+        <p>{{now}}</p>
     </div>
 
     <script>
@@ -31,6 +32,10 @@
         computed :{
             reversedMessage : function(){
                return this.message.split('').reverse().join('')
+            },
+            //只在相关响应式依赖发生改变时它们才会重新求值
+            now : function(){
+                return Date.now()
             }
         },
         methods: {
