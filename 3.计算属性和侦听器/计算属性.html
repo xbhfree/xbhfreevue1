@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +10,7 @@
 </head>
 
 <body>
-    <div id ="app"> 
+    <div id="app">
         <!-- 基础示例 -->
         <p>Original Message:{{message}}</p>
         <p>Computed Message:{{reversedMessage}}</p>
@@ -20,30 +21,63 @@
         -->
         <p>Method Message:{{reversedMessage()}}</p>
         <p>{{now}}</p>
+        <hr />
     </div>
-
+    <!-- 
+            计算属性 vs 侦听属性
+         -->
+    <div id="demo">{{ fullName }}</div>
+    <div id="demo2">{{ fullName }}</div>
     <script>
-     //计算属性
-     var vm = new Vue({
-        el: '#app',
-        data: {
-            message : 'hello vue.js'
-        },
-        computed :{
-            reversedMessage : function(){
-               return this.message.split('').reverse().join('')
+        //计算属性
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                message: 'hello vue.js'
             },
-            //只在相关响应式依赖发生改变时它们才会重新求值
-            now : function(){
-                return Date.now()
+            computed: {
+                reversedMessage: function () {
+                    return this.message.split('').reverse().join('')
+                },
+                //只在相关响应式依赖发生改变时它们才会重新求值
+                now: function () {
+                    return Date.now()
+                }
+            },
+            methods: {
+                reversedMessage: function () {
+                    return this.message.split('').reverse().join('')
+                }
             }
-        },
-        methods: {
-            reversedMessage : function(){
-               return this.message.split('').reverse().join('')
+        });
+        var vm2 = new Vue({
+            el: '#demo',
+            data: {
+                firstName: 'Foo',
+                lastName: 'Bar',
+                fullName: 'Foo Bar'
+            },
+            watch: {
+                firstName: function (val) {
+                    this.fullName = val + ' ' + this.lastName
+                },
+                lastName: function (val) {
+                    this.fullName = this.firstName + ' ' + val
+                }
             }
-        }
-     });
+        })
+        var vm3 = new Vue({
+            el: '#demo2',
+            data: {
+                firstName: 'Foo',
+                lastName: 'Bar'
+            },
+            computed: {
+                fullName: function () {
+                    return this.firstName + ' ' + this.lastName
+                }
+            }
+        })
     </script>
 </body>
 
