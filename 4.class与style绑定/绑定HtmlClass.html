@@ -22,6 +22,15 @@
         <div v-bind:class="classObject"></div>
         <!-- 计算属性 -->
         <div :class="classObjectCpu"></div>
+        <hr />
+        <!-- 数组语法
+         -->
+         <div v-bind:class="[activeClass, errorClass]"></div>
+         <!-- 三元表达式控制属性状态 -->
+         <div v-bind:class="[isActive ? activeClass : '', errorClass]"></div>
+         <!-- 数组语法中也可以用对象语法 -->
+         <div v-bind:class="[{ active: isActive }, errorClass]"></div>
+
 
     </div>
 
@@ -36,7 +45,9 @@
                     active: true,
                     'text-danger': false
                 },
-                error: null
+                error: null,
+                activeClass: 'active',
+                errorClass: 'text-danger'
             },
             computed: {
                 classObjectCpu: function () {
