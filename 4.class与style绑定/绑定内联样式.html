@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <!-- truthy（真值）指的是在布尔值上下文中，转换后的值为真的值。
+            所有值都是真值，除非它们被定义为 假值
+            （即除 false、0、-0、0n、""、null、undefined 和 NaN 以外皆为真值）。
+         -->
+         
+        <!-- 对象语法
+        v-bind:style 的对象语法十分直观——看着非常像 CSS，但其实是一个 JavaScript 对象。
+        CSS property 名可以用驼峰式 (camelCase) 或短横线分隔 (kebab-case，记得用引号括起来) 来命名
+        -->
+        <div v-bind:style="{ color: activeColor, fontSize: fontSize + 'px' }"></div>
+        <!-- 直接绑定到样式对象更好，代码清晰，也可以用计算属性 -->
+        <div v-bind:style="styleObject">so</div>
+        <div v-bind:style="styleObjectCpu">soc</div>
+
+        <!-- 数组语法 -->
+        <div v-bind:style="[baseStyles, overridingStyles]"></div>
+
+        <!-- 自动添加前缀
+        当 v-bind:style 使用需要添加浏览器引擎前缀的 CSS property 时，
+        如 transform，Vue.js 会自动侦测并添加相应的前缀。
+        -->
+
+        <!-- 多充值 2.3.0+ 
+        从 2.3.0 起你可以为 style 绑定中的 property 提供一个包含多个值的数组，常用于提供多个带前缀的值
+        这样写只会渲染数组中最后一个被浏览器支持的值。
+        在本例中，如果浏览器支持不带浏览器前缀的 flexbox，那么就只会渲染 display: flex-->
+        <div :style="{ display: ['-webkit-box', '-ms-flexbox', 'flex'] }"></div>
+
+
+
+    </div>
+
+    <script>
+        //创建Vue实例,得到 ViewModel
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                activeColor: 'red',
+                fontSize: 30,
+                styleObject: {
+                    color: 'red',
+                    fontSize: '13px'
+                },
+                baseStyles: {
+                    color: 'green'
+                },
+                overridingStyles: {
+                    fontSize: '15px'
+                }
+            },
+            computed: {
+                styleObjectCpu: function () {
+                    return {
+                        color: 'red',
+                        fontSize: '13px'
+                    }
+                }
+            },
+            methods: {}
+        });
+    </script>
+</body>
+
+</html>
