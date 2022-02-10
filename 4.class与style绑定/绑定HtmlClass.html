@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,17 +10,46 @@
 </head>
 
 <body>
-    <div id ="app"> </div>
+    <div id="app">
+        <!-- 对象语法
+        v-bind:class 指令也可以与普通的 class attribute 共存
+        可以通过多个字段组合控制class状态
+        1.直接定义；2、内联定义；3、计算属性
+        -->
+        <div :class="{ active: isActive }">hello vue</div>
+        <div class="static" v-bind:class="{ active: isActive, 'text-danger': hasError }">hello vue</div>
+        <!-- 绑定对象不需要内联定义在模板中 -->
+        <div v-bind:class="classObject"></div>
+        <!-- 计算属性 -->
+        <div :class="classObjectCpu"></div>
+
+    </div>
 
     <script>
-     //创建Vue实例,得到 ViewModel
-     var vm = new Vue({
-        el: '#app',
-        data: {},
-        methods: {}
-     });
+        //创建Vue实例,得到 ViewModel
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                isActive: true,
+                hasError: false,
+                classObject: {
+                    active: true,
+                    'text-danger': false
+                },
+                error: null
+            },
+            computed: {
+                classObjectCpu: function () {
+                    return {
+                        active: this.isActive && !this.error,
+                        'text-danger': this.error && this.error.type === 'fatal'
+                    }
+                }
+            },
+            methods: {}
+        });
 
-    
+
     </script>
 </body>
 
