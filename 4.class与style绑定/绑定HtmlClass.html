@@ -25,12 +25,16 @@
         <hr />
         <!-- 数组语法
          -->
-         <div v-bind:class="[activeClass, errorClass]"></div>
-         <!-- 三元表达式控制属性状态 -->
-         <div v-bind:class="[isActive ? activeClass : '', errorClass]"></div>
-         <!-- 数组语法中也可以用对象语法 -->
-         <div v-bind:class="[{ active: isActive }, errorClass]"></div>
-
+        <div v-bind:class="[activeClass, errorClass]"></div>
+        <!-- 三元表达式控制属性状态 -->
+        <div v-bind:class="[isActive ? activeClass : '', errorClass]"></div>
+        <!-- 数组语法中也可以用对象语法 -->
+        <div v-bind:class="[{ active: isActive }, errorClass]"></div>
+         <hr/>
+         <!-- 用在组件上 -->
+         <!-- 顺序添加属性，可以与对象语法组合使用 -->
+         <my-component class="baz boo"></my-component>
+         <my-component v-bind:class="{ active: isActive }"></my-component>
 
     </div>
 
@@ -60,7 +64,9 @@
             methods: {}
         });
 
-
+        Vue.component('my-component', {
+            template: '<p class="foo bar">Hi</p>'
+        })
     </script>
 </body>
 
