@@ -39,8 +39,27 @@
                 {{item.food}}
             </li>
         </ul>
+        <hr>
     </div>
 
+    <div id="v-for-object">
+        <!-- v-for遍历对象 -->
+        <ul>
+            <li v-for="value in objs">{{value}}</li>
+        </ul>
+        <hr>
+        <!-- 可以提供第二个的参数为 property 名称 (也就是键名) -->
+        <ul>
+            <li v-for="(value, name) in objs">{{value}} - {{name}}</li>
+        </ul>
+        <hr>
+        <!-- 可以用第三个参数作为索引 
+        在遍历对象时，会按 Object.keys() 的结果遍历，但是不能保证它的结果在不同的 JavaScript 引擎下都一致-->
+        <ul>
+            <li v-for="(value, name, index) in objs">{{value}} - {{name}} - {{index}}</li>
+        </ul>
+        <hr>
+    </div>
     <script>
      //创建Vue实例,得到 ViewModel
      var vm = new Vue({
@@ -52,6 +71,18 @@
                 {food : 'banana'},
                 {food : 'apple' }
             ]
+        },
+        methods: {}
+     });
+    //v-for访问对象
+    var vm2 = new Vue({
+        el: '#v-for-object',
+        data: {
+            objs : {
+                head : 'car',
+                body : 'ship',
+                tail : 'plane' 
+            }
         },
         methods: {}
      });
