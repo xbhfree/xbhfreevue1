@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id ="app"> 
+        <!-- 基础示例
+        v-for 指令基于一个数组来渲染一个列表。
+        v-for 指令需要使用 item in items 形式的特殊语法，
+        其中 items 是源数据数组，而 item 则是被迭代的数组元素的别名
+        -->
+        <ul>
+            <li v-for="item in foods" :key="item.food">
+                {{item.food}}
+            </li>
+        </ul>
+        <hr>
+        <!-- 访问父元素
+        v-for 还支持一个可选的第二个参数，即当前项的索引,
+        index只能放v-for最后面
+        -->
+        <ul>
+            <li v-for="(item, index) in foods" :key="item.food">
+                {{item.food}} - {{index}} - {{parentMessage}}
+            </li>
+        </ul>
+        <hr>
+        <!-- of 替代 in 作为分隔符
+        更接近JavaScript语法
+        -->
+        <ul>
+            <li v-for="item of foods" :key="item.food">
+                {{item.food}}
+            </li>
+        </ul>
+    </div>
+
+    <script>
+     //创建Vue实例,得到 ViewModel
+     var vm = new Vue({
+        el: '#app',
+        data: {
+            parentMessage: 'Parent',
+            foods : [
+                {food : 'fish'},
+                {food : 'banana'},
+                {food : 'apple' }
+            ]
+        },
+        methods: {}
+     });
+    </script>
+</body>
+
+</html>
