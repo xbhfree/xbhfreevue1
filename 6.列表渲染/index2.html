@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+</head>
+
+<body>
+    <!-- 数组检测更新 -->
+    <div id ="app"> 
+        <!-- 变更方法 
+        Vue 将被侦听的数组的变更方法进行了包裹，所以它们也将会触发视图更新。这些被包裹过的方法包括
+        push()
+        pop()
+        shift() 删除第一个元素并返回该元素
+        unshift() 返回最后一个元素的序号
+        splice()
+            splice(起始数字，删除个数) 删除操作
+            splice(起始数字，0，'a','b') 添加操作
+            splice(起始数字, 2, 'a','b') 替换操作
+        sort()
+        reverse()
+        控制台vm.items.push({ msg: 'Baz' })
+        -->
+        <ul>
+            <li v-for="item in items">
+                {{item.msg}}
+            </li>
+        </ul>
+        <hr>
+        <!-- 替换数组
+        变更方法，顾名思义，会变更调用了这些方法的原始数组。相比之下，也有非变更方法
+        filter()过滤
+        concat(数组A，数组) 组合数组
+        slice(num1,num2) 切割num1到num2的数组返回
+        slice(num) 返回num到结束的数组
+        它们不会变更原始数组，而总是返回一个新数组。当使用非变更方法时，可以用新数组替换旧数组
+        -->
+        <ul>
+            <li v-for="item in items2">
+                {{item.msg}}
+            </li>
+        </ul>
+    </div>
+
+    <script>
+     //创建Vue实例,得到 ViewModel
+     var vm = new Vue({
+        el: '#app',
+        data: {
+            items : [
+                {msg : 'A'},
+                {msg : 'B'},
+                {msg : 'C'}
+            ],
+            items2 : []
+        },
+        created : {
+            // items = items.filter(function(item){
+            //     return item.msg.match(/A/)
+            // })
+        },
+        computed : {
+            cpu : function(){
+                vm.items2 = vm.items.filter(function(item){
+                    return item.msg.match(/A/)
+                })
+            }
+        },
+        methods: {}
+     });
+    </script>
+</body>
+
+</html>
