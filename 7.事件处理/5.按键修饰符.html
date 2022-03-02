@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 在监听键盘事件时，我们经常需要检查详细的按键。Vue 允许为 v-on 在监听键盘事件时添加按键修饰符： -->
+        <!-- 只有在 `key` 是 `Enter` 时调用 `vm.submit()` -->
+        <input v-on:keyup.enter="submit">
+        <!-- 直接将 KeyboardEvent.key 暴露的任意有效按键名转换为 kebab-case 来作为修饰符 -->
+        <input v-on:keyup.page-down="onPageDown">
+        <!-- 上述示例中，处理函数只会在 $event.key 等于 PageDown 时被调用。 -->
+
+        <!-- 使用 keyCode attribute 也是允许的： -->
+        <input v-on:keyup.13="submit">
+
+
+        <!-- 为了在必要的情况下支持旧浏览器，Vue 提供了绝大多数常用的按键码的别名：
+        .enter
+        .tab
+        .delete (捕获“删除”和“退格”键)
+        .esc
+        .space
+        .up
+        .down
+        .left
+        .right
+        -->
+
+        <!-- 可以通过全局 config.keyCodes 对象自定义按键修饰符别名：
+        Vue.config.keyCodes.f1 = 112
+        -->
+
+        <!-- 给v-on自定义键位别名 -->
+        <input type="text" @keyup.media-play-pause="method">
+
+    </div>
+
+    <script>
+        // keyCodes
+        //类型：{ [key: string]: number | Array<number> }
+        //默认值：{}
+        Vue.config.keyCodes = {
+            v: 86,
+            f1: 112,
+            // camelCase 不可用
+            mediaPlayPause: 179,
+            // 取而代之的是 kebab-case 且用双引号括起来
+            "media-play-pause": 179,
+            up: [38, 87]
+        }
+        //创建Vue实例,得到 ViewModel
+        var vm = new Vue({
+            el: '#app',
+            data: {},
+            methods: {}
+        });
+    </script>
+</body>
+
+</html>
