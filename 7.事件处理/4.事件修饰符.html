@@ -23,7 +23,8 @@
         -->
 
         <!-- 阻止单击事件继续传播 -->
-        <a v-on:click.stop="doThis">v-on:click.stop</a>
+        <button v-on:click="doThis">v-on:click</button>
+        <button v-on:click.stop="doThis">v-on:click.stop</button>
 
         <!-- 提交事件不再重载页面 -->
         <form v-on:submit.prevent="onSubmit">v-on:submit.prevent</form>
@@ -68,7 +69,14 @@
         var vm = new Vue({
             el: '#app',
             data: {},
-            methods: {}
+            methods: {
+                doThis: function () {
+                    alert("doThis");
+                },
+                doThat: function () {
+                    alert("doThat");
+                }
+            }
         });
     </script>
 </body>
