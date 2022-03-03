@@ -32,6 +32,60 @@
         <p style="white-space: pre-line;">{{ msg }}</p>
         <br>
         <textarea v-model="msg" placeholder="add multiple lines"></textarea>
+        <hr>
+
+        <!-- 复选框 -->
+        <!-- 单个复选框 -->
+        <input type="checkbox" id="checkbox" v-model="checked">
+        <label for="checkbox">{{ checked }}</label>
+        <!-- 多个复选框 -->
+        <input type="checkbox" id="jack" value="Jack" v-model="checkedNames">
+        <label for="jack">Jack</label>
+        <input type="checkbox" id="john" value="John" v-model="checkedNames">
+        <label for="john">John</label>
+        <input type="checkbox" id="mike" value="Mike" v-model="checkedNames">
+        <label for="mike">Mike</label>
+        <br>
+        <span>Checked names: {{ checkedNames }}</span>
+        <hr>
+        <!-- 单选按钮 -->
+        <input type="radio" id="one" value="One" v-model="picked">
+        <label for="one">One</label>
+        <br>
+        <input type="radio" id="two" value="Two" v-model="picked">
+        <label for="two">Two</label>
+        <br>
+        <span>Picked: {{ picked }}</span>
+        <hr>
+        <!-- 选择框 
+        如果 v-model 表达式的初始值未能匹配任何选项，<select> 元素将被渲染为“未选中”状态。
+            在 iOS 中，这会使用户无法选择第一个选项。因为这样的情况下，iOS 不会触发 change 事件。
+            因此，更推荐像上面这样提供一个值为空的禁用选项
+        -->
+        <select name="" id="" v-model="selected">
+            <option disabled value="">请选择</option>
+            <option>A</option>
+            <option>B</option>
+            <option>C</option>
+        </select>
+        <span>Selected : {{selected}}</span>
+        <hr>
+        <!-- 多选选择框 -->
+        <select v-model="selectedArr" multiple style="width: 50px;">
+            <option>A</option>
+            <option>B</option>
+            <option>C</option>
+        </select>
+        <br>
+        <span>SelectedArr: {{ selectedArr }}</span>
+        <!-- v-for 渲染选择框 -->
+        <select v-model="selected">
+            <option v-for="option in options" v-bind:value="option.value">
+                {{ option.text }}
+            </option>
+        </select>
+        <span>selected: {{ selected }}</span>
+
     </div>
 
     <script>
@@ -40,7 +94,17 @@
             el: '#app',
             data: {
                 message: '',
-                msg : ''
+                msg: '',
+                checked: true,
+                checkedNames: [],
+                picked: '',
+                selected: '',
+                selectedArr: [],
+                options: [
+                    { text: 'One', value: 'A' },
+                    { text: 'Two', value: 'B' },
+                    { text: 'Three', value: 'C' }
+                ]
             },
             methods: {}
         });
