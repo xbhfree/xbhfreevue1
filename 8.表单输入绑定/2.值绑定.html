@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 复选框 -->
+        <input type="checkbox" v-model="toggle" true-value="yes" false-value="no">
+        <span>toggle {{toggle}}</span>
+        <hr>
+        <!-- 单选按钮 -->
+        <input type="radio" v-model="pick" v-bind:value="a">
+        <span>pick {{pick}}</span>
+        <hr>
+        <!-- 选择框的选择 -->
+        <select v-model="selected">
+            <!-- 内联对象字面量 -->
+          <option v-bind:value="{ number: 123 }">123</option>
+        </select>
+    </div>
+
+    <script>
+        //创建Vue实例,得到 ViewModel
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                toggle: true,
+                pick : 'a',
+                selected : []
+            },
+            methods: {}
+        });
+    </script>
+</body>
+
+</html>
