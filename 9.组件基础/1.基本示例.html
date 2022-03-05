@@ -10,10 +10,21 @@
 </head>
 
 <body>
+    <!-- 基本示例 -->
     <div id="components-demo">
         <counter></counter>
     </div>
+    <hr>
 
+    <!-- 组件复用 
+    一个组件的 data 选项必须是一个函数，因此每个实例可以维护一份被返回对象的独立的拷贝：
+    如果 Vue 没有这条规则，点击一个按钮就可能会影响其他数据
+    -->
+    div id="components-demo">
+        <counter></counter>
+        <counter></counter>
+        <counter></counter>
+    </div>
     <script>
         Vue.component('counter', {
             data: function () {
