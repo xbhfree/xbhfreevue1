@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,15 +10,22 @@
 </head>
 
 <body>
-    <div id ="app"> </div>
+    <div id="components-demo">
+        <counter></counter>
+    </div>
 
     <script>
-     //创建Vue实例,得到 ViewModel
-     var vm = new Vue({
-        el: '#app',
-        data: {},
-        methods: {}
-     });
+        Vue.component('counter', {
+            data: function () {
+                return {
+                    count: 0
+                }
+            },
+            template: '<button v-on:click="count++">click me:{{count}}</button>'
+        })
+        //注意顺序，先组件后Vue
+        new Vue({ el: '#components-demo' })
+
     </script>
 </body>
 
