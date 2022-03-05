@@ -20,11 +20,19 @@
     一个组件的 data 选项必须是一个函数，因此每个实例可以维护一份被返回对象的独立的拷贝：
     如果 Vue 没有这条规则，点击一个按钮就可能会影响其他数据
     -->
-    div id="components-demo">
+    <div id="components-demo">
         <counter></counter>
         <counter></counter>
         <counter></counter>
     </div>
+
+    <!-- 组件的组织
+    为了能在模板中使用，这些组件必须先注册以便 Vue 能够识别。这里有两种组件的注册类型：
+    全局注册和局部注
+
+    全局注册的组件可以用在其被注册之后的任何 (通过 new Vue) 新创建的 Vue 根实例，
+    也包括其组件树中的所有子组件的模板中。
+    -->
     <script>
         Vue.component('counter', {
             data: function () {
