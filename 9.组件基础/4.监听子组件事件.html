@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+</head>
+
+<body>
+    <div>
+        <div id="blog-posts-events-demo">
+            <!-- 配置控制字号
+            Vue 实例提供了一个自定义事件的系统来解决这个问题。
+            父级组件可以像处理 native DOM 事件一样通过 v-on 监听子组件实例的任意事件
+            -->
+            <!-- 当在父级组件监听这个事件的时候，我们可以通过 $event 访问到被抛出的这个值 -->
+            <div :style="{ fontSize: postFontSize + 'em' }">
+                <blog-post v-for="post in posts" v-bind:key="post.id" v-bind:post="post"
+                    v-on:enlarge-text="postFontSize += $event"></blog-post>
+            </div>
+        </div>
+        <hr>
+        <div id="blog-posts-events-demo">
+            <div :style="{ fontSize: postFontSize + 'em' }">
+                <!-- 如果这个事件处理函数是一个方法,抛出值将会作为第一个参数传入这个方法 -->
+                <blog-post v-for="post in posts" v-bind:key="post.id" v-bind:post="post"
+                    v-on:enlarge-text="onEnlargeText"></blog-post>
+            </div>
+        </div>
+        <hr>
+    </div>
+
+    <script>
+        // 可以使用 $emit 的第二个参数来提供抛出的值
+        Vue.component('blog-post', {
+            props: ['post'],
+            template: `
+            <div class="blog-post">
+            <h3>{{ post.title }}</h3>
+            <button v-on:click="$emit('enlarge-text', 0.1)">
+                Enlarge text
+            </button>
+            <div v-html="post.content"></div>
+            </div>`
+        })
+        //在我们开发 <blog-post> 组件时，它的一些功能可能要求我们和父级组件进行沟通。
+        //例如我们可能会引入一个辅助功能来放大博文的字号，同时让页面的其它部分保持默认的字号。
+        //在其父组件中，我们可以通过添加一个 postFontSize 数据 property 来支持这个功能： 
+        new Vue({
+            el: '#blog-posts-events-demo',
+            data: {
+                posts: [
+                    { id: 1, title: 'My journey with Vue' },
+                    { id: 2, title: 'Blogging with Vue' },
+                    { id: 3, title: 'Why Vue is so fun' }
+                ],
+                postFontSize: 1
+            },
+            methods: {
+                onEnlargeText: function (enlargeAmount) {
+                    this.postFontSize += enlargeAmount
+                }
+            }
+        })
+        
+    </script>
+</body>
+
+</html>
