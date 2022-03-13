@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app"> </div>
+
+    <script>
+        //在模块系统中局部注册
+        //如果你还在阅读，说明你使用了诸如 Babel 和 webpack 的模块系统。在这些情况下，
+        //我们推荐创建一个 components 目录，并将每个组件放置在其各自的文件中。
+        // 然后你需要在局部注册之前导入每个你想使用的组件。例如，在一个假设的 ComponentB.js 或 ComponentB.vue 文件中：
+        import ComponentA from './ComponentA'
+        import ComponentC from './ComponentC'
+
+        export default {
+            components: {
+                ComponentA,
+                ComponentC
+            },
+            // ...
+        }
+        //创建Vue实例,得到 ViewModel
+        var vm = new Vue({
+            el: '#app',
+            data: {},
+            methods: {}
+        });
+    </script>
+</body>
+
+</html>

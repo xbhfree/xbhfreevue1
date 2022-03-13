@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 只是用于模板中的一小部分
+        你恰好使用了 webpack (或在内部使用了 webpack 的 Vue CLI 3+)，那么就可以使用 require.context 只全局注册这些非常通用的基础组件。
+        这里有一份可以让你在应用入口文件 (比如 src/main.js) 中全局导入基础组件的示例代码
+        -->
+        <BaseInput
+        v-model="searchText"
+        @keydown.enter="search"
+      />
+      <BaseButton @click="search">
+        <BaseIcon name="search"/>
+      </BaseButton>    
+    </div>
+
+    <script>
+        //基础组件的自动化全局注册
+        //可能你的许多组件只是包裹了一个输入框或按钮之类的元素，是相对通用的。
+        //我们有时候会把它们称为基础组件，它们会在各个组件中被频繁的用到。
+        // 所以会导致很多组件里都会有一个包含基础组件的长列表：
+        import BaseButton from './BaseButton.vue'
+        import BaseIcon from './BaseIcon.vue'
+        import BaseInput from './BaseInput.vue'
+
+        export default {
+            components: {
+                BaseButton,
+                BaseIcon,
+                BaseInput
+            }
+        }
+        //创建Vue实例,得到 ViewModel
+        var vm = new Vue({
+            el: '#app',
+            data: {},
+            methods: {}
+        });
+    </script>
+</body>
+
+</html>
