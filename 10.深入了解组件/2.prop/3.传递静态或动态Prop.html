@@ -11,24 +11,26 @@
 
 <body>
     <div id="app">
-        <!-- 静态值 -->
-        <blog-post v-bind:post = 'post' v-bind:title="My journey with Vue"></blog-post>
+        <!-- 静态赋值 -->
+        <blog-post title="My journey with Vue"></blog-post>
+        <!-- 动态赋值 -->
+        <span>{{post.title}}</span>
+        <span>{{posts[0].id}}</span>
+        <!-- <blog-post v-bind:title="post.title"></blog-post> -->
     </div>
 
     <script>
         Vue.component('blog-post', {
-            props: ['post', 'posts'],
+            props: ['title','post', 'posts'],
             template: `
-            <div class="blog-post">
             <h2>{{title}}</h2>
-            <h3>{{ post.title }}</h3>
-            </div> `
+            `
         })
         //创建Vue实例,得到 ViewModel
         var vm = new Vue({
             el: '#app',
             data: {
-                post : {title : "Post Title"},
+                post: {title: "Post Title"},
                 posts: [
                     { id: 1, title: 'My journey with Vue' },
                     { id: 2, title: 'Blogging with Vue' },
