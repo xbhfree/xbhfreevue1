@@ -22,13 +22,20 @@
         <!-- 传入一个数字 -->
         <!-- 即便 `42` 是静态的，我们仍然需要 `v-bind` 来告诉 Vue -->
         <!-- 这是一个 JavaScript 表达式而不是一个字符串。-->
+        <blog-post v-bind:likes="42"></blog-post>
+        <!-- 用一个变量进行动态赋值。-->
+        <blog-post v-bind:likes="post.likes"></blog-post>
+
     </div>
 
     <script>
         Vue.component('blog-post', {
-            props: {title : String, likes:Number, post:Object, posts:Array},
+            props: { title: String, likes: Number, post: Object, posts: Array },
             template: `
+            <div>
             <h2>{{title}}</h2>
+            <span>{{likes}}</span>
+            </div>
             `
         })
         //创建Vue实例,得到 ViewModel
