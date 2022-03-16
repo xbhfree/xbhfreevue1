@@ -14,14 +14,19 @@
         <!-- 静态赋值 -->
         <blog-post title="My journey with Vue"></blog-post>
         <!-- 动态赋值 -->
-        <span>{{post.title}}</span>
-        <span>{{posts[0].id}}</span>
-        <!-- <blog-post v-bind:title="post.title"></blog-post> -->
+        <blog-post v-bind:title="post.title"></blog-post>
+        <!-- 复杂动态赋值 -->
+        <blog-post v-bind:title="post.title + ' by ' + post.author.name"></blog-post>
+        <hr>
+
+        <!-- 传入一个数字 -->
+        <!-- 即便 `42` 是静态的，我们仍然需要 `v-bind` 来告诉 Vue -->
+        <!-- 这是一个 JavaScript 表达式而不是一个字符串。-->
     </div>
 
     <script>
         Vue.component('blog-post', {
-            props: ['title','post', 'posts'],
+            props: {title : String, likes:Number, post:Object, posts:Array},
             template: `
             <h2>{{title}}</h2>
             `
@@ -30,7 +35,7 @@
         var vm = new Vue({
             el: '#app',
             data: {
-                post: {title: "Post Title"},
+                post: { likes: 42, title: "Post Title", author: { name: 'My name is Jason' } },
                 posts: [
                     { id: 1, title: 'My journey with Vue' },
                     { id: 2, title: 'Blogging with Vue' },
