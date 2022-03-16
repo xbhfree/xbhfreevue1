@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+</head>
+
+<body>
+    <!-- 定义：一个非 prop 的 attribute 是指传向一个组件，但是该组件并没有相应 prop 定义的 attribute。
+    显式定义的 prop 适用于向一个子组件传入信息，然而组件库的作者并不总能预见组件会被用于怎样的场景。
+    这也是为什么组件可以接受任意的 attribute，而这些 attribute 会被添加到这个组件的根元素上
+    -->
+    <div id="app">
+        <!-- 替换/合并已有的 Attribute 
+        在这种情况下，我们定义了两个不同的 class 的值：
+        1、form-control，这是在组件的模板内设置好的
+        2、date-picker-theme-dark，这是从组件的父级传入的 
+        对于绝大多数 attribute 来说，从外部提供给组件的值会替换掉组件内部设置好的值。
+        所以如果传入 type="text" 就会替换掉 type="date" 并把它破坏！
+        庆幸的是，class 和 style attribute 会稍微智能一些，即两边的值会被合并起来，
+        从而得到最终的值：form-control date-picker-theme-dark。-->
+        <!-- <bootstrap-date-input data-date-picker="activated" class="date-picker-theme-dark"></bootstrap-date-input> -->
+
+        <!-- 禁用 Attribute 继承
+            这个模式允许你在使用基础组件的时候更像是使用原始的 HTML 元素，而不会担心哪个元素是真正的根元素
+         -->
+        <base-input label="Username:" v-model="username" required placeholder="Enter your username"></base-input>
+    </div>
+
+    <script>
+        Vue.component('bootstrap-date-input', {
+            props: [],
+            template: `<input type="date" class="form-control">`
+        })
+
+        Vue.component('my-component', {
+            //禁用 Attribute 继承
+            inheritAttrs: false,
+            // ...
+        })
+        //有了 inheritAttrs: false 和 $attrs，你就可以手动决定这些 attribute 会被赋予哪个元素。在撰写基础组件的时候是常会用到的
+        //注意 inheritAttrs: false 选项不会影响 style 和 class 的绑定。
+        // label标签，在 label 元素内点击文本,就会触发此控件
+        Vue.component('base-input', {
+            inheritAttrs: false,
+            props: ['label', 'value'],
+            template: `
+                <label>
+                {{ label }}
+                <input
+                    v-bind="$attrs"
+                    v-bind:value="value"
+                    v-on:input="$emit('input', $event.target.value)"
+                >
+                </label>
+            `
+        })
+
+        //v-bind="$props": 可以将父组件的所有props下发给它的子组件,子组件需要在其props:{} 中定义要接受的props。
+        //v-bind="$attrs": 将调用组件时的组件标签上绑定的非props的特性(class和style除外)向下传递。
+        //在子组件中应当添加inheritAttrs: false(避免父作用域的不被认作props的特性绑定应用在子组件的根元素上)。
+        //创建Vue实例,得到 ViewModel
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                username : ''
+            },
+            methods: {}
+        });
+    </script>
+</body>
+
+</html>
