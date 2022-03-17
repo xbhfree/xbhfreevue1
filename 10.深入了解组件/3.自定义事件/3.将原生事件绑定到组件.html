@@ -20,7 +20,7 @@
         <!-- 在一个组件的根元素上直接监听一个原生事件。这时，你可以使用 v-on 的 .native 修饰符 -->
         <base-input v-on:focus.native="onFocus"></base-input>
         <hr>
-        <a v-on:focus="onFocus" id="myAnchor" href="//www.runoob.com">访问菜鸟教程</a>
+        <a id="myAnchor" href="//www.runoob.com">访问菜鸟教程</a>
         <input type="button" onclick="getfocus()" value="获取焦点">
         <input type="button" onclick="losefocus()" value="移除焦点">
 
@@ -71,8 +71,9 @@
                             input: function (event) {
                                 vm.$emit('input', event.target.value)
                             },
-                            onFocus: function () {
-                                vm.$emit()
+                            focus: function (event) {
+                                vm.$emit('focus', event)
+                                console.log(event)
                             }
                         }
                     )
@@ -95,7 +96,11 @@
                 username: '',
                 password: ''
             },
-            methods: {}
+            methods: {
+                onFocus: function() {
+                    alert("onFocus run")
+                }
+            }
         });
     </script>
 </body>
