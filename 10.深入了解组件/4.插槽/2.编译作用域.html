@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <span>{{user}}</span>
+        <navigation-link url="/profile">
+            Logged in as {{ user.name }}
+        </navigation-link>
+        <hr>
+        <navigation-link url="/profile">
+            Clicking here will send you to: {{ url }}
+            <!--
+            这里的 `url` 会是 undefined，因为其 (指该插槽的) 内容是
+            _传递给_ <navigation-link> 的而不是
+            在 <navigation-link> 组件*内部*定义的。
+            -->
+            <!-- 父级模板里的所有内容都是在父级作用域中编译的；
+                子模板里的所有内容都是在子作用域中编译的。 
+            -->
+        </navigation-link>
+
+    </div>
+
+    <script>
+        Vue.component('navigation-link', {
+            props: {
+                url: String,
+                user: { name: String }
+            },
+            template: `<a
+                v-bind:href="url"
+                class="nav-link"
+                >
+                <slot></slot>
+                </a>`
+        })
+        //创建Vue实例,得到 ViewModel
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                user: {
+                    name: 'Alen'
+                }
+            },
+            methods: {}
+        });
+    </script>
+</body>
+
+</html>
