@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 通过slot属性name插入多个slot标签 -->
+        <!-- 一个不带 name 的 <slot> 出口会带有隐含的名字“default”。 -->
+        <base-layout>
+            <template v-slot:header>
+                <h1>Here might be a page title</h1>
+            </template>
+
+            <p>A paragraph for the main content.</p>
+            <p>And another one.</p>
+
+            <template v-slot:footer>
+                <p>Here's some contact info</p>
+            </template>
+        </base-layout>
+        <hr>
+        <!-- 如果你希望更明确一些，仍然可以在一个 <template> 中包裹默认插槽的内容： -->
+        <base-layout>
+            <template v-slot:header>
+                <h1>Here might be a page title</h1>
+            </template>
+
+            <template v-slot:default>
+                <p>A paragraph for the main content.</p>
+                <p>And another one.</p>
+            </template>
+
+            <template v-slot:footer>
+                <p>Here's some contact info</p>
+            </template>
+        </base-layout>
+        <!-- 
+            注意 v-slot 只能添加在 <template> 上 (只有一种例外情况)，
+            这一点和已经废弃的 slot attribute 不同。 
+        -->
+    </div>
+
+    <script>
+        Vue.component('base-layout', {
+            props: {
+
+            },
+            template: `
+            <div class="container">
+            <header>
+                <slot name="header"></slot>
+            </header>
+            <main>
+                <slot></slot>
+            </main>
+            <footer>
+                <slot name="footer"></slot>
+            </footer>
+            </div>
+            `
+        })
+        //创建Vue实例,得到 ViewModel
+        var vm = new Vue({
+            el: '#app',
+            data: {},
+            methods: {}
+        });
+    </script>
+</body>
+
+</html>
