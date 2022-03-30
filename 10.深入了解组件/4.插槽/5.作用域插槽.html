@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <span>{{slotProps}}</span>
+        <span>{{slotProps.user.firstName}}</span>
+        <hr>
+        <current-user>
+            <template v-slot:default="slotProps">
+                {{slotProps.user.firstName }}
+            </template>
+        </current-user>
+    </div>
+
+    <script>
+        Vue.component('current-user', {
+            props: {
+                slotProps: Object
+            },
+            // 为了让 user 在父级的插槽内容中可用，我们可以将 user 作为 <slot> 元素的一个 attribute 绑定上去
+            template: `
+            <span>
+                <slot v-bind:user="user">{{ user.lastName }}</slot>
+            </span>
+            `
+        })
+        //创建Vue实例,得到 ViewModel
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                slotProps: {
+                    user: {
+                        firstName: 'Alen',
+                        lastName: 'Biden'
+                    }
+                }
+            },
+            methods: {}
+        });
+    </script>
+</body>
+
+</html>
