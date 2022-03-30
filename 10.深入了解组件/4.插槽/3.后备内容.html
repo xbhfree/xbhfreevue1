@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <submit-button></submit-button>
+        <hr>
+        <!-- 提供的内容将会被渲染从而取代后备内容 -->
+        <submit-button>save</submit-button>
+    </div>
+
+    <script>
+        Vue.component('submit-button', {
+            props: {
+
+            },
+            template: `
+            <button type="submit">
+                <button type="submit">
+                <slot>Submit</slot>
+            </button>
+            `
+        })
+        //创建Vue实例,得到 ViewModel
+        var vm = new Vue({
+            el: '#app',
+            data: {},
+            methods: {}
+        });
+    </script>
+</body>
+
+</html>
