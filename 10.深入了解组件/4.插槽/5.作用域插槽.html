@@ -11,9 +11,6 @@
 
 <body>
     <div id="app">
-        <span>{{slotProps}}</span>
-        <span>{{slotProps.user.firstName}}</span>
-        <hr>
         <current-user>
             <template v-slot:default="slotProps">
                 {{slotProps.user.firstName }}
@@ -24,7 +21,15 @@
     <script>
         Vue.component('current-user', {
             props: {
-                slotProps: Object
+
+            },
+            data() {
+                return {
+                    user: {
+                        firstName: 'f',
+                        lastName: 'l'
+                    }
+                }
             },
             // 为了让 user 在父级的插槽内容中可用，我们可以将 user 作为 <slot> 元素的一个 attribute 绑定上去
             template: `
@@ -37,11 +42,9 @@
         var vm = new Vue({
             el: '#app',
             data: {
-                slotProps: {
-                    user: {
-                        firstName: 'Alen',
-                        lastName: 'Biden'
-                    }
+                user: {
+                    firstName: 'Alen',
+                    lastName: 'Biden'
                 }
             },
             methods: {}
