@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <!-- v-slot 的值实际上可以是任何能够作为函数定义中的参数的 JavaScript 表达式。
+            所以在支持的环境下 (单文件组件或现代浏览器)，你也可以使用 ES2015 解构来传入具体的插槽 prop 
+        -->
+        {{ user.firstName }}
+        <current-user v-slot="{ user }">
+            {{ user.firstName }}
+        </current-user>
+        <hr>
+        <current-user v-slot="{ user: person }">
+            {{ person.firstName }}
+        </current-user>
+        <hr>
+        <!-- 可以定义后备内容，用于插槽 prop 是 undefined 的情形： -->
+        <current-user2 v-slot="{ user = { firstName: 'Guest' } }">
+            {{ user.firstName }}
+        </current-user2>
+    </div>
+
+    <script>
+        Vue.component('current-user2', {
+            props: {
+            },
+
+            // 为了让 user 在父级的插槽内容中可用，我们可以将 user 作为 <slot> 元素的一个 attribute 绑定上去
+            template: `
+            <span>
+                <slot v-bind:user="user">{{ user.lastName }}</slot>
+            </span>
+            `
+        })
+        Vue.component('current-user', {
+            props: {
+            },
+            data() {
+                return {
+                    user: {
+                        firstName: 'f',
+                        lastName: 'l'
+                    }
+                }
+            },
+            // 为了让 user 在父级的插槽内容中可用，我们可以将 user 作为 <slot> 元素的一个 attribute 绑定上去
+            template: `
+            <span>
+                <slot v-bind:user="user">{{ user.lastName }}</slot>
+            </span>
+            `
+        })
+        //作用域插槽的内部工作原理是将你的插槽内容包裹在一个拥有单个参数的函数里：
+        /*function (slotProps) {
+            // 插槽内容
+        }*/
+        //创建Vue实例,得到 ViewModel
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                user: {
+                    firstName: 'Alen',
+                    lastName: 'Biden'
+                }
+            },
+            methods: {}
+        });
+    </script>
+</body>
+
+</html>
