@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 插槽 prop 允许我们将插槽转换为可复用的模板，这些模板可以基于输入的 prop 渲染出不同的内容。
+                这在设计封装数据逻辑同时允许父级组件自定义部分布局的可复用组件时是最有用的。
+        -->
+        <!-- 当我们使用 <todo-list> 组件的时候，
+            我们可以选择为 todo 定义一个不一样的 <template> 作为替代方案，
+            并且可以从子组件获取数据： 
+        -->
+        <todo-list v-bind:todos="todos">
+            <template v-slot:todo="{ todo }">
+                <span v-if="todo.isComplete">✓</span>
+                {{ todo.text }}
+            </template>
+        </todo-list>
+    </div>
+
+    <script>
+        Vue.component('todo-list', {
+            props: [],
+            data() {
+                return {
+                    filteredTodos: [
+                        { text: 'A', isComplete: true },
+                        { text: 'B', isComplete: false },
+                        { text: 'C', isComplete: true },
+                        { text: 'D', isComplete: false },
+                    ]
+                }
+            },
+            template: `
+            <ul>
+                <li
+                    v-for="todo in filteredTodos"
+                    v-bind:key="todo.id"
+                >
+                    <!--
+                    我们为每个 todo 准备了一个插槽，
+                    将 todo 对象作为一个插槽的 prop 传入。
+                    -->
+                    <slot name="todo" v-bind:todo="todo">
+                    <!-- 后备内容 -->
+                    {{ todo.text }}
+                    </slot>
+                </li>
+                </ul>
+            `
+        })
+        //创建Vue实例,得到 ViewModel
+        var vm = new Vue({
+            el: '#app',
+            data: {},
+            methods: {}
+        });
+    </script>
+</body>
+
+</html>
