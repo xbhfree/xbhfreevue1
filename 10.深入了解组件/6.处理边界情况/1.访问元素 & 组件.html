@@ -10,10 +10,28 @@
 </head>
 
 <body>
-    <root-template></root-template>
     <div id="app">
         <root-template></root-template>
     </div>
+    <!-- 
+        访问父级组件实例
+        和 $root 类似，$parent property 可以用来从一个子组件访问父组件的实例。
+        它提供了一种机会，可以在后期随时触达父级组件，以替代将数据以 prop 的方式传入子组件的方式。
+    -->
+    <!-- 有的时候你仍可能需要在 JavaScript 里直接访问一个子组件。
+        为了达到这个目的，你可以通过 ref 这个 attribute 为子组件赋予一个 ID 引用。例如： -->
+    <base-input ref="usernameInput"></base-input>
+    <!-- 
+    可以使用：this.$refs.usernameInput
+    访问这个 <base-input> 实例，以便不时之需。比如程序化地从一个父级组件聚焦这个输入框。
+    在刚才那个例子中，该 <base-input> 组件也可以使用一个类似的 ref 提供对内部这个指定元素的访问，例如：
+ -->
+    <input ref="input">
+    <!-- 
+        $refs 只会在组件渲染完成之后生效，并且它们不是响应式的。这仅作为一个用于直接操作子组件的“逃生舱”——你应该避免在模板或计算属性中访问 $refs。当 ref 和 v-for 一起使用的时候，你得到的 ref 将会是一个包含了对应数据源的这些子组件的数组。
+    
+    -->
+
     <script>
         Vue.component('root-template', {
             data() {
@@ -54,7 +72,13 @@
             data: {
                 foo: 2
             },
-            methods: {}
+            methods: {
+                //甚至可以通过其父级组件定义方法：
+                focus: function () {
+                    this.$refs.input.focus()
+                }
+
+            }
         });
     </script>
 </body>
