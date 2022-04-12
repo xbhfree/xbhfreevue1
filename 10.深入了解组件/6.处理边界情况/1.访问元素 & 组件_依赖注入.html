@@ -22,6 +22,7 @@
 
     <script>
         Vue.component("google-map", {
+            //provide 选项允许我们指定我们想要提供给后代组件的数据/方法
             provide: function () {
                 return {
                     getMap: this.getMap
@@ -55,6 +56,7 @@
         });
 
         Vue.component("google-map-marker", {
+            //可以使用 inject 选项来接收指定的我们想要添加在这个实例上的 property
             inject: ["getMap"],
             props: ["places"],
             created: function () {

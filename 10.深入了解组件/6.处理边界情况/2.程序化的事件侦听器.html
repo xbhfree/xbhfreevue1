@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+</head>
+
+<body>
+    <!--    
+        通过 $on(eventName, eventHandler) 侦听一个事件
+        通过 $once(eventName, eventHandler) 一次性侦听一个事件
+        通过 $off(eventName, eventHandler) 停止侦听一个事件
+    -->
+    <div id="app2">
+        <input ref="dateInput" v-model="date" type="date" />
+
+    </div>
+
+    <script>
+        //创建Vue实例,得到 ViewModel
+        var vm = new Vue({
+            el: '#app',
+            data: {},
+            methods: {},
+            // 一次性将这个日期选择器附加到一个输入框上
+            // 它会被挂载到 DOM 上。
+            mounted: function () {
+                // Pikaday 是一个第三方日期选择器的库
+                this.picker = new Pikaday({
+                    field: this.$refs.input,
+                    format: 'YYYY-MM-DD'
+                })
+            },
+            // 在组件被销毁之前，
+            // 也销毁这个日期选择器。
+            beforeDestroy: function () {
+                this.picker.destroy()
+            }
+        });
+
+
+        // 它需要在这个组件实例中保存这个 picker，如果可以的话最好只有生命周期钩子可以访问到它。这并不算严重的问题，但是它可以被视为杂物。
+        // 我们的建立代码独立于我们的清理代码，这使得我们比较难于程序化地清理我们建立的所有东西。
+        var vm2 = new Vue({
+            el: '#app2',
+            data: {},
+            methods: {},
+            mounted: function () {
+                var picker = new Pikaday({
+                    field: this.$refs.input,
+                    format: 'YYYY-MM-DD'
+                })
+
+                this.$once('hook:beforeDestroy', function () {
+                    picker.destroy()
+                })
+            }
+        });
+
+        // 使用了这个策略，我甚至可以让多个输入框元素同时使用不同的 Pikaday，每个新的实例都程序化地在后期清理它自己：
+        var vm3 = new Vue({
+            el: '#app2',
+            data: {},
+            mounted: function () {
+                this.attachDatepicker('startDateInput')
+                this.attachDatepicker('endDateInput')
+            },
+            methods: {
+                attachDatepicker: function (refName) {
+                    var picker = new Pikaday({
+                        field: this.$refs[refName],
+                        format: 'YYYY-MM-DD'
+                    })
+
+                    this.$once('hook:beforeDestroy', function () {
+                        picker.destroy()
+                    })
+                }
+            }
+        });
+
+    </script>
+</body>
+
+</html>
