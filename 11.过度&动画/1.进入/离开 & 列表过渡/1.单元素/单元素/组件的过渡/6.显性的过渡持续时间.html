@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+</head>
+
+<body>
+    <!-- 
+        在很多情况下，Vue 可以自动得出过渡效果的完成时机。
+        默认情况下，Vue 会等待其在过渡效果的根元素的第一个 transitionend 或 animationend 事件。
+        然而也可以不这样设定——比如，我们可以拥有一个精心编排的一系列过渡效果，
+        其中一些嵌套的内部元素相比于过渡效果的根元素有延迟的或更长的过渡效果。
+        在这种情况下你可以用 <transition> 组件上的 duration prop 定制一个显性的过渡持续时间 (以毫秒计)：
+     -->
+    <transition :duration="1000">...</transition>
+    <!-- 定制进入和移出的持续时间： -->
+    <transition :duration="{ enter: 500, leave: 800 }">...</transition>
+
+    <div id="app"> </div>
+
+    <script>
+        //创建Vue实例,得到 ViewModel
+        var vm = new Vue({
+            el: '#app',
+            data: {},
+            methods: {}
+        });
+    </script>
+</body>
+
+</html>
