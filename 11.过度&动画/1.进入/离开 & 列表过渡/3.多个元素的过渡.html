@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+</head>
+
+<body>
+    <!-- 原生标签可以使用 v-if/v-else。最常见的多标签过渡是一个列表和描述这个列表为空消息的元素-->
+    <transition>
+        <table v-if="items.length > 0">
+            <!-- ... -->
+        </table>
+        <p v-else>Sorry, no items found.</p>
+    </transition>
+
+    <!-- 
+        当有相同标签名的元素切换时，需要通过 key attribute 设置唯一的值来标记以让 Vue 区分它们，
+        否则 Vue 为了效率只会替换相同标签内部的内容。
+        即使在技术上没有必要，给在 <transition> 组件中的多个元素设置 key 是一个更好的实践。 
+    -->
+    <transition>
+        <button v-if="isEditing" key="save">
+            Save
+        </button>
+        <button v-else key="edit">
+            Edit
+        </button>
+    </transition>
+
+    <!-- 重写上述示例 -->
+    <div id="app">
+        <transition>
+            <button v-bind:key="docState">
+                {{ buttonMessage }}
+            </button>
+        </transition>
+    </div>
+    <hr>
+    <!-- 
+        过渡模式
+        <transition> 的默认行为 - 进入和离开同时发生
+        同时生效的进入和离开的过渡不能满足所有要求，所以 Vue 提供了过渡模式
+        in-out：新元素先进行过渡，完成之后当前元素过渡离开。
+        out-in：当前元素先进行过渡，完成之后新元素过渡进入。
+    -->
+    <div id="no-mode-demo" class="demo">
+        <transition name="no-mode-fade">
+            <button v-if="on" key="on" @click="on = false">
+                on
+            </button>
+            <button v-else key="off" @click="on = true">
+                off
+            </button>
+        </transition>
+    </div>
+    <hr>
+    <!-- 绝对定位 -->
+    <div id="no-mode-absolute-demo" class="demo">
+        <div class="no-mode-absolute-demo-wrapper">
+            <transition name="no-mode-absolute-fade">
+                <button v-if="on" key="on" @click="on = false">
+                    on
+                </button>
+                <button v-else key="off" @click="on = true">
+                    off
+                </button>
+            </transition>
+        </div>
+    </div>
+
+    <script>
+        <style>
+            .no-mode-absolute-demo-wrapper {
+                position: relative;
+            height: 18px;}
+            .no-mode-absolute-demo-wrapper button {
+                position: absolute;}
+            .no-mode-absolute-fade-enter-active, .no-mode-absolute-fade-leave-active {
+                transition: opacity .5s;}
+            .no-mode-absolute-fade-enter, .no-mode-absolute-fade-leave-active {
+                opacity: 0;}
+        </style>
+
+        new Vue({
+            el: '#no-mode-absolute-demo',
+            data: {
+                on: false
+            }
+        })
+        new Vue({
+            el: '#no-mode-demo',
+            data: {
+                on: false
+            }
+        })
+        //创建Vue实例,得到 ViewModel
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                docState: 'saved'
+            },
+            methods: {},
+            computed: {
+                buttonMessage: function () {
+                    switch (this.docState) {
+                        case 'saved': return 'Edit'
+                        case 'edited': return 'Save'
+                        case 'editing': return 'Cancel'
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
