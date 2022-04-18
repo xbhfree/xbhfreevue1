@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+</head>
+
+<body>
+    <!-- 可以通过 appear(显得,出现) attribute 设置节点在初始渲染的过渡 -->
+    <div id="app">
+        <button @click="show = !show">
+            Toggle render
+        </button>
+        <transition appear>
+            <!-- ... -->
+            <p v-if="show">hello</p>
+        </transition>
+    </div>
+    <!-- 这里默认和进入/离开过渡一样，同样也可以自定义 CSS 类名。 -->
+
+    <div id="app2">
+        <button @click="show = !show">
+            Toggle render
+        </button>
+        <transition appear appear-class="custom-appear-class" appear-to-class="custom-appear-to-class" (2.1.8+)
+            appear-active-class="custom-appear-active-class">
+            <!-- ... -->
+            <p v-if="show">hello</p>
+        </transition>
+    </div>
+
+    <!-- 自定义 JavaScript 钩子： -->
+    <div id="app3">
+        <button @click="show = !show">
+            Toggle render
+        </button>
+        <transition appear v-on:before-appear="customBeforeAppearHook" v-on:appear="customAppearHook"
+            v-on:after-appear="customAfterAppearHook" v-on:appear-cancelled="customAppearCancelledHook">
+            <!-- ... -->
+            <p v-if="show">hello</p>
+        </transition>
+    </div>
+
+
+    <div id="app"> </div>
+
+    <script>
+        //创建Vue实例,得到 ViewModel
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                show: true
+            },
+            methods: {}
+        });
+
+        new Vue({
+            el: '#app2',
+            data: {
+                show: true
+            },
+            methods: {}
+        });
+
+        new Vue({
+            el: '#app3',
+            data: {
+                show: true
+            },
+            methods: {}
+        });
+    </script>
+</body>
+
+</html>
