@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <style>
+        .list-item {
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        .list-enter-active,
+        .list-leave-active {
+            transition: all 1s;
+        }
+
+        .list-enter,
+        .list-leave-to
+
+        /* .list-leave-active for below version 2.1.8 */
+            {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 
+        怎么同时渲染整个列表，比如使用 v-for？在这种场景中，使用 <transition-group> 组件。
+        在我们深入例子之前，先了解关于这个组件的几个特点:
+        不同于 <transition>，它会以一个真实元素呈现：默认为一个 <span>。你也可以通过 tag attribute 更换为其他元素。
+        过渡模式不可用，因为我们不再相互切换特有的元素。
+        内部元素总是需要提供唯一的 key attribute 值。
+        CSS 过渡的类将会应用在内部的元素中，而不是这个组/容器本身。
+     -->
+    <div id="list-demo" class="demo">
+        <button v-on:click="add">Add</button>
+        <button v-on:click="remove">Remove</button>
+        <transition-group name="list" tag="p">
+            <span v-for="item in items" v-bind:key="item" class="list-item">
+                {{ item }}
+            </span>
+        </transition-group>
+    </div>
+    <div id="app"> </div>
+
+    <script>
+        new Vue({
+            el: '#list-demo',
+            data: {
+                items: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+                nextNum: 10
+            },
+            methods: {
+                randomIndex: function () {
+                    // math.floor(x)返回小于参数x的最大整数,即对浮点数向下取整。
+                    // Math.random()是令系统随机选取大于等于 0.0 且小于 1.0 的伪随机 double 值
+                    return Math.floor(Math.random() * this.items.length)
+                },
+                add: function () {
+                    // splice(index,howmany,item1) 方法向/从数组中添加/删除项目，然后返回被删除的项目。
+                    // 注释：该方法会改变原始数组。
+                    // index —— 必需。整数，规定添加/删除项目的位置，使用负数可从数组结尾处规定位置。
+                    // howmany —— 必需。要删除的项目数量。如果设置为 0，则不会删除项目。
+                    // item1, …, itemX —— 可选。向数组添加的新项目。
+
+                    this.items.splice(this.randomIndex(), 0, this.nextNum++)
+                },
+                remove: function () {
+                    this.items.splice(this.randomIndex(), 1)
+                },
+            }
+        })
+        //创建Vue实例,得到 ViewModel
+        var vm = new Vue({
+            el: '#app',
+            data: {},
+            methods: {}
+        });
+    </script>
+</body>
+
+</html>
