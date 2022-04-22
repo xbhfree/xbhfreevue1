@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.14.1/lodash.min.js"></script>
+
+    <style>
+        .flip-list-move {
+            transition: transform 1s;
+        }
+
+        .list-complete-item {
+            transition: all 1s;
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        .list-complete-enter,
+        .list-complete-leave-to
+
+        /* .list-complete-leave-active for below version 2.1.8 */
+            {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .list-complete-leave-active {
+            position: absolute;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 
+        <transition-group> 组件还有一个特殊之处。
+        不仅可以进入和离开动画，还可以改变定位。
+        要使用这个新功能只需了解新增的 v-move class，它会在元素的改变定位的过程中应用。
+        像之前的类名一样，可以通过 name attribute 来自定义前缀，也可以通过 move-class attribute 手动设置。
+     -->
+    <div id="flip-list-demo" class="demo">
+        <button v-on:click="shuffle">Shuffle</button>
+        <transition-group name="flip-list" tag="ul">
+            <li v-for="item in items" v-bind:key="item">
+                {{ item }}
+            </li>
+        </transition-group>
+    </div>
+    <hr>
+    <div id="list-complete-demo" class="demo">
+        <button v-on:click="shuffle">Shuffle</button>
+        <button v-on:click="add">Add</button>
+        <button v-on:click="remove">Remove</button>
+        <transition-group name="list-complete" tag="p">
+            <span v-for="item in items" v-bind:key="item" class="list-complete-item">
+                {{ item }}
+            </span>
+        </transition-group>
+    </div>
+
+    <div id="app"> </div>
+
+    <script>
+        new Vue({
+            el: '#list-complete-demo',
+            data: {
+                items: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+                nextNum: 10
+            },
+            methods: {
+                randomIndex: function () {
+                    return Math.floor(Math.random() * this.items.length)
+                },
+                add: function () {
+                    this.items.splice(this.randomIndex(), 0, this.nextNum++)
+                },
+                remove: function () {
+                    this.items.splice(this.randomIndex(), 1)
+                },
+                shuffle: function () {
+                    this.items = _.shuffle(this.items)
+                }
+            }
+        })
+
+        new Vue({
+            el: '#flip-list-demo',
+            data: {
+                items: [1, 2, 3, 4, 5, 6, 7, 8, 9]
+            },
+            methods: {
+                // shuffle 洗牌,shuffle（）函数把数组中的元素按随机顺序重新排列。
+                shuffle: function () {
+                    this.items = _.shuffle(this.items)
+                }
+            }
+        })
+        //创建Vue实例,得到 ViewModel
+        var vm = new Vue({
+            el: '#app',
+            data: {},
+            methods: {}
+        });
+    </script>
+</body>
+
+</html>
