@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.14.1/lodash.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    </script>
+    <style>
+        .sudoku-container {
+            /* display: flex 弹性布局
+            https://www.php.cn/css-tutorial-382410.html
+            */
+            display: flex;
+            flex-wrap: wrap;
+            width: 238px;
+            margin-top: 10px;
+        }
+
+        .cell {
+            display: flex;
+            /* 在弹性盒对象的 <div> 元素中的各项周围留有空白： */
+            justify-content: space-around;
+            align-items: center;
+            width: 25px;
+            height: 25px;
+            border: 1px solid #aaa;
+            margin-right: -1px;
+            margin-bottom: -1px;
+        }
+
+        .cell:nth-child(3n) {
+            margin-right: 0;
+        }
+
+        .cell:nth-child(27n) {
+            margin-bottom: 0;
+        }
+
+        .cell-move {
+            transition: transform 1s;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="sudoku-demo" class="demo">
+        <strong>Lazy Sudoku</strong>
+        <p>Keep hitting the shuffle button until you win.</p>
+        <button @click="shuffle">
+            Shuffle
+        </button>
+        <transition-group name="cell" tag="div" class="sudoku-container">
+            <div v-for="cell in cells" :key="cell.id" class="cell">
+                {{ cell.number }}
+            </div>
+        </transition-group>
+    </div>
+    <div id="app"> </div>
+
+    <script>
+        new Vue({
+            el: '#sudoku-demo',
+            data: {
+                // 一个长度为81，且每个元素值都被初赋值为undefined的数组（
+                //注意此时不是数组元素没有初始化，而是初始化成undefined
+                //https://blog.csdn.net/qq_35430000/article/details/115332139
+                //Array.apply(null, { length: 81 }) 获得0-80的数组id
+                cells: Array.apply(null, { length: 81 })
+                    .map(function (_, index) {
+                        return {
+                            id: index,
+                            number: index % 9 + 1
+                        }
+                    })
+            },
+            methods: {
+                shuffle: function () {
+                    this.cells = _.shuffle(this.cells)
+                }
+            }
+        })
+        //创建Vue实例,得到 ViewModel
+        var vm = new Vue({
+            el: '#app',
+            data: {},
+            methods: {}
+        });
+    </script>
+</body>
+
+</html>
