@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+</head>
+
+<body>
+    <!-- 
+        当组件和混入对象含有同名选项时，这些选项将以恰当的方式进行“合并”。
+        比如，数据对象在内部会进行递归合并，并在发生冲突时以组件数据优先。
+
+        值为对象的选项，例如 methods、components 和 directives，将被合并为同一个对象。
+        两个对象键名冲突时，取组件对象的键值对。
+     -->
+    <div id="app"> ss</div>
+    <div id="app2"> ss</div>
+    <script>
+        var mixin = {
+            data: function () {
+                return {
+                    message: 'hello',
+                    foo: 'aaa'
+                }
+            }
+        }
+        var mixin2 = {
+            data: function () {
+                return {
+                    message: 'hello',
+                    foo: 'acd'
+                }
+            }
+        }
+        new Vue({
+            el: '#app2',
+            // 同名属性采取最后一个
+            mixins: [mixin2, mixin],
+            data: function () {
+                return {
+                    message: 'goodbye',
+                    bar: 'def'
+                }
+            },
+            created: function () {
+                console.log(this.$data)
+                // => { message: "goodbye", foo: "abc", bar: "def" }
+            }
+        })
+
+        var mixin = {
+            created: function () {
+                console.log('混入对象的钩子被调用')
+            }
+        }
+
+        new Vue({
+            mixins: [mixin],
+            created: function () {
+                console.log('组件钩子被调用')
+            }
+        })
+
+        // => "混入对象的钩子被调用"
+        // => "组件钩子被调用"
+
+        var mixin = {
+            methods: {
+                foo: function () {
+                    console.log('foo')
+                },
+                conflicting: function () {
+                    console.log('from mixin')
+                }
+            }
+        }
+
+        var vm = new Vue({
+            mixins: [mixin],
+            methods: {
+                bar: function () {
+                    console.log('bar')
+                },
+                conflicting: function () {
+                    console.log('from self')
+                }
+            }
+        })
+
+        vm.foo() // => "foo"
+        vm.bar() // => "bar"
+        vm.conflicting() // => "from self"
+        // 注意：Vue.extend() 也使用同样的策略进行合并。
+        //创建Vue实例,得到 ViewModel
+        var vm = new Vue({
+            el: '#app',
+            data: {},
+            methods: {}
+        });
+    </script>
+</body>
+
+</html>
