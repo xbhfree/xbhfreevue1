@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <anchored-heading :level="1">Hello world!</anchored-heading>
+        <hr>
+        <!-- 简化示例 -->
+        <anchored-heading2 :level="2">Hello world!</anchored-heading2>
+    </div>
+
+    <script type="text/x-template" id="anchored-heading-template">
+        <h1 v-if="level === 1">
+          <slot></slot>
+        </h1>
+        <h2 v-else-if="level === 2">
+          <slot></slot>
+        </h2>
+        <h3 v-else-if="level === 3">
+          <slot></slot>
+        </h3>
+        <h4 v-else-if="level === 4">
+          <slot></slot>
+        </h4>
+        <h5 v-else-if="level === 5">
+          <slot></slot>
+        </h5>
+        <h6 v-else-if="level === 6">
+          <slot></slot>
+        </h6>
+    </script>
+    <script>
+        Vue.component('anchored-heading', {
+            template: '#anchored-heading-template',
+            props: {
+                level: {
+                    type: Number,
+                    required: true
+                }
+            }
+        })
+        /**
+         * 向组件中传递不带 v-slot 指令的子节点时，比如 anchored-heading 中的 Hello world!，
+         * 这些子节点被存储在组件实例中的 $slots.default 中。
+         * 如果你还不了解，在深入渲染函数之前推荐阅读实例 property 
+         * API https://cn.vuejs.org/v2/api/#%E5%AE%9E%E4%BE%8B-property
+        */
+        Vue.component('anchored-heading2', {
+            render: function (createElement) {
+                return createElement(
+                    'h' + this.level,   // 标签名称
+                    this.$slots.default // 子节点数组
+                )
+            },
+            props: {
+                level: {
+                    type: Number,
+                    required: true
+                }
+            }
+        })
+        //创建Vue实例,得到 ViewModel
+        var vm = new Vue({
+            el: '#app',
+            data: {},
+            methods: {}
+        });
+    </script>
+</body>
+
+</html>
