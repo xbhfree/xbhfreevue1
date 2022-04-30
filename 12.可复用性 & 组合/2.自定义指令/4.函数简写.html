@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <span>
+            <p v-color-swatch="color"> sss</p>
+        </span>
+    </div>
+
+    <script>
+        // 在很多时候，你可能想在 bind 和 update 时触发相同行为，而不关心其它的钩子。比如这样写：
+        Vue.directive('color-swatch', function (el, binding) {
+            el.style.backgroundColor = binding.value
+        })
+        //创建Vue实例,得到 ViewModel
+        var vm = new Vue({
+            el: '#app',
+            data: function () {
+                return { color: 'red' }
+            },
+            methods: {}
+        });
+    </script>
+</body>
+
+</html>
