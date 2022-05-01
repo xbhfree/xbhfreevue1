@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+</head>
+
+<body>
+    <div>
+        <h1>My title</h1>
+        Some text content
+        <!-- TODO: Add tagline -->
+    </div>
+    <!-- 
+        div
+        h1 Some text content <!--
+        div为父dom节点，h1,smoe,<!-- 为子节点
+        每个元素都是一个节点。每段文字也是一个节点。
+        甚至注释也都是节点。一个节点就是页面的一个部分。
+        就像家谱树一样，每个节点都可以有孩子节点 (也就是说每个部分可以包含其它的一些部分)。
+    -->
+    <!-- 
+        虚拟 DOM
+        Vue 通过建立一个虚拟 DOM 来追踪自己要如何改变真实 DOM。
+        return createElement('h1', this.blogTitle)
+        createElement返回createNodeDescription
+        它所包含的信息会告诉 Vue 页面上需要渲染什么样的节点，包括及其子节点的描述信息。
+        我们把这样的节点描述为“虚拟节点 (virtual node)”，也常简写它为“VNode”。
+        “虚拟 DOM”是我们对由 Vue 组件树建立起来的整个 VNode 树的称呼。
+    -->
+
+    <div id="app"> </div>
+
+    <script>
+        //创建Vue实例,得到 ViewModel
+        var vm = new Vue({
+            el: '#app',
+            data: {},
+            methods: {}
+        });
+    </script>
+</body>
+
+</html>
