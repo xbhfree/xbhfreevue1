@@ -1,5 +1,9 @@
 {
   "dependencies": {
     "vue": "^2.6.14"
+  },
+  "scripts": {
+    "start": "npm run serve",
+    "build": "node build/build.js"
   }
 }
